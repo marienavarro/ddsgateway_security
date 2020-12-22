@@ -13,18 +13,25 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+// enable middleware
+// $router->get('/', function () use ($router) {
+//     return $router->app->version();
+// });
+
+$router->group(['middleware' =>'client.credentials'], function() use ($router){
+
+    // API routes for Site 1
+    $router->get('/users1', 'User1Controller@getUsers');
+    $router->post('/users1', 'User1Controller@addUser');
+    $router->get('/users1/{id}', 'User1Controller@show');
+    $router->put('/users1/{id}', 'User1Controller@update');
+    $router->delete('/users1/{id}', 'User1Controller@delete');
+
+    // API routes for Site 2
+    $router->get('/users2', 'User2Controller@getUsers');
+    $router->post('/users2', 'User2Controller@addUser');
+    $router->get('/users2/{id}', 'User2Controller@show');
+    $router->put('/users2/{id}', 'User2Controller@update');
+    $router->delete('/users2/{id}', 'User2Controller@delete');
+
 });
-
-$router->get('/users1', 'User1Controller@index'); // shows all the current users
-$router->post('/users1', 'User1Controller@addUser'); // add user
-$router->get('/users1/{id}', 'User1Controller@show'); // shows a specific user
-$router->put('/users1/{id}', 'User1Controller@update'); // update a specific user
-$router->delete('/users1/{id}', 'User1Controller@delete'); //delete a specific user
-
-$router->get('/users2', 'User2Controller@index'); // shows all the current users
-$router->post('/users2', 'User2Controller@addUser'); // add user
-$router->get('/users2/{id}', 'User2Controller@show');// shows a specific user 
-$router->put('/users2/{id}', 'User2Controller@update'); // update a specific user 
-$router->delete('/users2/{id}', 'User2Controller@delete'); //delete a specific user 
